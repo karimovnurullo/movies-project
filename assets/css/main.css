@@ -1,0 +1,26 @@
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+body{
+   padding: 0;
+}
+.main{
+   width: 100%;
+   height: calc(100vh - 56px);
+   background-color: #eee;
+   display: flex;
+}
+.main-left{
+   width: 50%;
+   display: flex;
+   justify-content: center;
+}
+.list-group{
+   width: 270px;
+}
+.list-group .list-group-item{
+   height: 50px;
+   font-size: 22px;
+}
