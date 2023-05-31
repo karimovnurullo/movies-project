@@ -9,58 +9,69 @@
    <link rel="stylesheet" href="./assets/css/main.css">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
 
-   <!-- <div class="container"> -->
-   <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-         <a class="navbar-brand" href="#">Madina</a>
-         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-         </button>
-         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-               <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Login</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="#">Register</a>
-               </li>
+   <div class="main-container">
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+         <div class="container-fluid">
+            <a class="navbar-brand" href="#">Madina</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+               data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+               aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                     <a class="nav-link active" aria-current="page" href="#">Login</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#">Register</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+      <main class="main">
+         <div class="main-left">
+            <ul class="list-group">
+               <!-- <li class="list-group-item active">All genres</li> -->
             </ul>
          </div>
-      </div>
-   </nav>
-   <main class="main">
-      <div class="main-left">
-         <ul class="list-group">
-            <!-- <li class="list-group-item active">All genres</li> -->
-         </ul>
-      </div>
-      <div class="main-right">
-         <table class="table">
-            <thead>
-               <tr>
-                  <th scope="col">Title</th>
-                  <th scope="col">Genre</th>
-                  <th scope="col">Stock</th>
-                  <th scope="col">Rate</th>
-               </tr>
-            </thead>
-            <tbody class="tbody">
-               <!-- <tr>
+         <div class="main-right">
+            <button class="btn btn-primary add-new-movie">New Movie</button>
+            <div class="showing-result">Showing 12 movies in the database.</div>
+            <input type="text" name="query" class="form-control my-3" placeholder="Search..." value="">
+            <table class="main-table table table-light table-hover">
+               <thead>
+                  <tr>
+                     <th scope="col">Title</th>
+                     <th scope="col">Genre</th>
+                     <th scope="col">Stock</th>
+                     <th scope="col">Rate</th>
+                     <th scope="col"></th>
+                  </tr>
+               </thead>
+               <tbody class="tbody">
+                  <!-- <tr>
                   <th scope="row">1</th>
                   <td>Mark</td>
                   <td>Otto</td>
                   <td>@mdo</td>
                </tr> -->
-            </tbody>
-         </table>
-      </div>
-   </main>
-   <!-- </div> -->
+               </tbody>
+            </table>
+            <div class="btn-group me-2" role="group" aria-label="Second group">
+               <button type="button" class="btn btn-outline-secondary">1</button>
+               <button type="button" class="btn btn-outline-secondary">2</button>
+               <button type="button" class="btn btn-outline-secondary">3</button>
+            </div>
+         </div>
+      </main>
+   </div>
 
 
 

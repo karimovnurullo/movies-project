@@ -41,6 +41,9 @@ liAll.classList.add("list-group-item", "active");
 liAll.textContent = "All genres";
 listGroupMenus.appendChild(liAll);
 liAll.addEventListener("click", () => {
+  while (tbody.firstChild) {
+    tbody.removeChild(tbody.firstChild);
+  }
   const allLi = document.querySelectorAll(".list-group-item");
   allLi.forEach((item) => item.classList.remove("active"));
   liAll.classList.add("active");
@@ -63,25 +66,6 @@ liAll.addEventListener("click", () => {
   }
   console.log(counter);
 });
-
-let counter = 0;
-for (const menu of menusList) {
-  for (const movie of menu.movies) {
-    counter++;
-    const tr = document.createElement("tr");
-    const td1 = document.createElement("td");
-    const td2 = document.createElement("td");
-    const td3 = document.createElement("td");
-    const td4 = document.createElement("td");
-    td1.textContent = movie.title;
-    td2.textContent = menu.name;
-    td3.textContent = movie.numberInStock.toString();
-    td4.textContent = movie.dailyRentalRate.toString();
-    tr.append(td1, td2, td3, td4);
-    tbody.appendChild(tr);
-  }
-}
-console.log(counter);
 
 for (const menu of menusList) {
   const li = document.createElement("li");
