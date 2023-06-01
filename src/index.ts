@@ -35,6 +35,8 @@ const menusList = [
 
 const listGroupMenus = document.querySelector<HTMLUListElement>(".list-group")!;
 const tbody = document.querySelector<HTMLTableElement>(".tbody")!;
+const loginBtn = document.querySelectorAll<HTMLButtonElement>(".login-btn")!;
+const registerBtn = document.querySelectorAll<HTMLButtonElement>(".register-btn")!;
 
 const liAll = document.createElement("li");
 liAll.classList.add("list-group-item", "active");
@@ -100,3 +102,16 @@ for (const menu of menusList) {
 }
 
 const manuBtns = document.querySelectorAll<HTMLLIElement>(".list-group-item")!;
+
+
+loginBtn.forEach(element => {
+   element.addEventListener("click", () => {
+      window.location.href = "login";
+   })
+});
+
+registerBtn.forEach(element => {
+   element.addEventListener("click", () => {
+      window.location.href = "register";
+   })
+});

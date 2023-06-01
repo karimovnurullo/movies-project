@@ -35,6 +35,8 @@ const menusList = [
 ];
 const listGroupMenus = document.querySelector(".list-group");
 const tbody = document.querySelector(".tbody");
+const loginBtn = document.querySelectorAll(".login-btn");
+const registerBtn = document.querySelectorAll(".register-btn");
 const liAll = document.createElement("li");
 liAll.classList.add("list-group-item", "active");
 liAll.textContent = "All genres";
@@ -97,3 +99,13 @@ for (const menu of menusList) {
     });
 }
 const manuBtns = document.querySelectorAll(".list-group-item");
+loginBtn.forEach(element => {
+    element.addEventListener("click", () => {
+        window.location.href = "login";
+    });
+});
+registerBtn.forEach(element => {
+    element.addEventListener("click", () => {
+        window.location.href = "register";
+    });
+});

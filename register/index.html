@@ -23,36 +23,48 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                     <a class="nav-link active" aria-current="page" href="#">Login</a>
+                  <li class="nav-item login-btn">
+                     <a class="nav-link" aria-current="page" href="#">Login</a>
                   </li>
-                  <li class="nav-item">
-                     <a class="nav-link" href="#">Register</a>
+                  <li class="nav-item register-btn">
+                     <a class="nav-link active" href="#">Register</a>
                   </li>
                </ul>
             </div>
          </div>
       </nav>
       <main class="register-main">
+         <div class="alert alert-danger register-alert d-none" role="alert">
+            Please fill out all required fields.
+          </div>
          <h2 class="title">Register</h2>
          <form class="register-form">
             <div class="mb-3">
                <label class="form-label">Username</label>
-               <input type="email" name="username" class="form-control">
+               <input type="text" name="email" class="form-control">
+               <div class="alert alert-danger email-alert d-none" role="alert">
+                  Missing email
+                </div>
             </div>
             <div class="mb-3">
                <label class="form-label">Password</label>
                <input type="password" name="password" class="form-control">
+               <div class="alert alert-danger password-alert d-none" role="alert">
+                  Missing password
+                </div>
             </div>
             <div class="mb-3">
                <label class="form-label">Name</label>
                <input type="text" name="userName" class="form-control">
+               <div class="alert alert-danger username-alert d-none" role="alert">
+                  Missing username
+                </div>
             </div>
-            <button type="button" class="btn btn-primary disabled">Register</button>
+            <button type="submit" class="btn btn-primary register-submit">Register</button>
          </form>
    </div>
    </main>
 
 </body>
-
+<script type="module" src="../dist/register.js"></script>
 </html>
