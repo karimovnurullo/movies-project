@@ -35,14 +35,12 @@ registerForm.addEventListener("submit", async (e) => {
     setTimeout(() => usernameAlert.classList.add("d-none"), 2500);
   } else {
     try {
-
       let user = { email, password, username };
-      const response = await fetch(
-        "https://pdp-movies-78.onrender.com/api/auth/",
+      const response = await fetch("https://pdp-movies-78.onrender.com/api/auth/",
         {
           method: "POST",
           body: JSON.stringify(user),
-          headers: { "Content-Type": "application/json" },
+          headers: { "content-Type": "application/json" },
         }
       );
       const data = await response.json();

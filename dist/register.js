@@ -45,7 +45,7 @@ registerForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0,
             const response = yield fetch("https://pdp-movies-78.onrender.com/api/auth/", {
                 method: "POST",
                 body: JSON.stringify(user),
-                headers: { "Content-Type": "application/json" },
+                headers: { "content-Type": "application/json" },
             });
             const data = yield response.json();
             console.log(data);
