@@ -1,132 +1,177 @@
-// const menusList = [
-//   {
-//     name: "Comedy",
-//     movies: [
-//       { title: "Airplane", numberInStock: 5, dailyRentalRate: 2 },
-//       { title: "The Hangover", numberInStock: 10, dailyRentalRate: 2 },
-//       { title: "Wedding Crashers", numberInStock: 15, dailyRentalRate: 2 },
-//     ],
-//   },
-//   {
-//     name: "Action",
-//     movies: [
-//       { title: "Die Hard", numberInStock: 5, dailyRentalRate: 2 },
-//       { title: "Terminator", numberInStock: 10, dailyRentalRate: 2 },
-//       { title: "The Avengers", numberInStock: 15, dailyRentalRate: 2 },
-//     ],
-//   },
-//   {
-//     name: "Romance",
-//     movies: [
-//       { title: "The Notebook", numberInStock: 5, dailyRentalRate: 2 },
-//       { title: "When Harry Met Sally", numberInStock: 10, dailyRentalRate: 2 },
-//       { title: "Pretty Woman", numberInStock: 15, dailyRentalRate: 2 },
-//     ],
-//   },
-//   {
-//     name: "Thriller",
-//     movies: [
-//       { title: "The Sixth Sense", numberInStock: 5, dailyRentalRate: 2 },
-//       { title: "Gone Girl", numberInStock: 10, dailyRentalRate: 2 },
-//       { title: "The Others", numberInStock: 15, dailyRentalRate: 2 },
-//     ],
-//   },
-// ];
 
 const listGroupMenus = document.querySelector<HTMLUListElement>(".list-group")!;
 const tbody = document.querySelector<HTMLTableElement>(".tbody")!;
 const loginBtn = document.querySelectorAll<HTMLButtonElement>(".login-btn")!;
 const registerBtn = document.querySelectorAll<HTMLButtonElement>(".register-btn")!;
+const showingNum = document.querySelector<HTMLSpanElement>(".showing-num")!;
+const searchInput = document.querySelector<HTMLInputElement>(".search")!;
+const titleSort = document.querySelector<HTMLButtonElement>(".title-sort")!;
+const pagination = document.querySelector<HTMLDivElement>(".pagination")!;
 
 async function getMenus() {
   const res = await fetch("https://pdp-movies-78.onrender.com/api/genres/");
   const data = await res.json();
   return data;
 }
+async function getMovies() {
+  const res = await fetch("https://pdp-movies-78.onrender.com/api/movies/");
+  const data = await res.json();
+  return data;
+}
 
-const liAll = document.createElement("li");
-liAll.classList.add("list-group-item", "active");
-liAll.textContent = "All genres";
-listGroupMenus.appendChild(liAll);
-liAll.addEventListener("click", () => {
-  while (tbody.firstChild) {
-    tbody.removeChild(tbody.firstChild);
-  }
-  const allLi = document.querySelectorAll(".list-group-item");
-  allLi.forEach((item) => item.classList.remove("active"));
-  liAll.classList.add("active");
-  let counter = 0;
+getMovies().then((movies) => {
+  const liAll = document.createElement("li");
+  liAll.classList.add("list-group-item", "active");
+  liAll.textContent = "All genres";
+  listGroupMenus.appendChild(liAll);
 
-  // for (const menu of movies) {
-  //   for (const movie of menu.movies) {
-  //     counter++;
-  //     const tr = document.createElement("tr");
-  //     const td1 = document.createElement("td");
-  //     const td2 = document.createElement("td");
-  //     const td3 = document.createElement("td");
-  //     const td4 = document.createElement("td");
-  //     td1.textContent = movie.title;
-  //     td2.textContent = menu.name;
-  //     td3.textContent = movie.numberInStock.toString();
-  //     td4.textContent = movie.dailyRentalRate.toString();
-  //     tr.append(td1, td2, td3, td4);
-  //     tbody.appendChild(tr);
-  //   }
-  // }
-  console.log(counter);
+  let sortmuvies = movies.sort((a, b) => a.title.localeCompare(b.title));
+
+  liAll.addEventListener("click", (e) => {
+    clearTable();
+    activeMenu(e);
+    let counter = 0;
+    for (const movie of sortmuvies) {
+      counter++;
+      generateRow(movie);
+    }
+    showingNum.textContent = counter.toString();
+  })
+
+  //=========================  SEARCH =================
+
+  searchInput.addEventListener("input", (e) => {
+    let value = (e.target as HTMLInputElement).value;
+    clearTable();
+    let count = 0;
+    for (let movie of movies) {
+      if (movie.title.toLowerCase().includes(value.toLowerCase())) {
+        count++;
+        generateRow(movie);
+      }
+    }
+    showingNum.textContent = count.toString();
+  })
 })
 
 
+// async function showMovies() {
+//   const menus = await getMenus();
+//   const movies = await getMovies();
+//   let sortmuvies = movies.sort((a, b) => a.title.localeCompare(b.title));
+
+//   for (const menu of menus) {
+//     const newArr = sortmuvies.filter(item => menu.name === item.genre.name)
+//     const li = document.createElement("li");
+//     li.classList.add("list-group-item");
+//     li.textContent = menu.name;
+//     listGroupMenus.append(li);
+//     li.addEventListener("click", (e) => {
+//       activeMenu(e);
+//       clearTable();
+//       let counter = 0;
+//       for (const movie of newArr) {
+//         counter++;
+//         generateRow(movie);
+//       }
+//       showingNum.textContent = counter.toString();
+//     });
+//   }
+// }
+
+const itemsPerPage = 4;
+let currentPage = 1;
+let filteredMovies: any[] = [];
+
 async function showMovies() {
   const menus = await getMenus();
-
+  const movies = await getMovies();
+  let sortMovies = movies.sort((a, b) => a.title.localeCompare(b.title));
 
   for (const menu of menus) {
+    const newArr = sortMovies.filter(item => menu.name === item.genre.name);
     const li = document.createElement("li");
     li.classList.add("list-group-item");
     li.textContent = menu.name;
     listGroupMenus.append(li);
-    li.classList.remove("active");
     li.addEventListener("click", (e) => {
-      const allLi = document.querySelectorAll(".list-group-item");
-      allLi.forEach((item) => item.classList.remove("active"));
-      (e.target as HTMLLIElement).classList.add("active");
-      while (tbody.firstChild) {
-        tbody.removeChild(tbody.firstChild);
-      }
-      let counter = 0;
-      // for (const movie of menu.movies) {
-      //   counter++;
-      //   const tr = document.createElement("tr");
-      //   const td1 = document.createElement("td");
-      //   const td2 = document.createElement("td");
-      //   const td3 = document.createElement("td");
-      //   const td4 = document.createElement("td");
-      //   td1.textContent = movie.title;
-      //   td2.textContent = menu.name;
-      //   td3.textContent = movie.numberInStock.toString();
-      //   td4.textContent = movie.dailyRentalRate.toString();
-      //   tr.append(td1, td2, td3, td4);
-      //   tbody.appendChild(tr);
-      // }
-      console.log(counter);
+      activeMenu(e);
+      filteredMovies = newArr;
+      currentPage = 1;
+      renderMovies();
+      updatePagination();
     });
   }
+
+  filteredMovies = sortMovies;
+  renderMovies();
+  updatePagination();
 }
+
+function renderMovies() {
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedMovies = filteredMovies.slice(startIndex, endIndex);
+
+  tbody.innerHTML = "";
+  for (const movie of paginatedMovies) {
+    generateRow(movie);
+  }
+  showingNum.textContent = paginatedMovies.length.toString();
+}
+
+function updatePagination() {
+  const totalPages = Math.ceil(filteredMovies.length / itemsPerPage);
+  pagination.innerHTML = "";
+
+  if (currentPage > totalPages) {
+    currentPage = totalPages;
+  }
+
+  for (let i = 1; i <= totalPages; i++) {
+    const button = document.createElement("button");
+    button.textContent = i.toString();
+    button.classList.add("btn", "pagination-button");
+    if (i === currentPage) {
+      button.classList.add("active");
+    }
+    button.addEventListener("click", () => {
+      button.classList.add("active");
+      currentPage = i;
+      renderMovies();
+      updatePagination();
+    });
+    pagination.appendChild(button);
+  }
+}
+
 showMovies();
 
 
-const manuBtns = document.querySelectorAll<HTMLLIElement>(".list-group-item")!;
+loginBtn.forEach(element => element.addEventListener("click", () => window.location.href = "login"));
+registerBtn.forEach(element => element.addEventListener("click", () => window.location.href = "register"));
+
+// ========================== Functions =================
+
+function clearTable() {
+  while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
+}
+
+function activeMenu(e: Event) {
+  const allLi = document.querySelectorAll(".list-group-item");
+  allLi.forEach((item) => item.classList.remove("active"));
+  (e.target as HTMLLIElement).classList.add("active");
+}
 
 
-loginBtn.forEach(element => {
-  element.addEventListener("click", () => {
-    window.location.href = "login";
-  })
-});
+function generateRow(movie: any) {
+  const rowData = [movie.title, movie.genre.name, movie.numberInStock.toString(), movie.dailyRentalRate.toString()];
+  const tr = document.createElement("tr");
+  rowData.forEach((columnData) => {
+    const td = document.createElement("td");
+    td.textContent = columnData;
+    tr.appendChild(td);
+  });
+  tbody.appendChild(tr);
+}
 
-registerBtn.forEach(element => {
-  element.addEventListener("click", () => {
-    window.location.href = "register";
-  })
-});

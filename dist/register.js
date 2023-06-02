@@ -13,7 +13,6 @@ const registerSubmit = document.querySelector(".register-submit");
 const registerAlert = document.querySelector(".register-alert");
 registerForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0, function* () {
     e.preventDefault();
-    // Get form input values
     const email = registerForm.email.value.trim();
     const emailAlert = registerForm.querySelector(".email-alert");
     const passwordAlert = registerForm.querySelector(".password-alert");
@@ -45,7 +44,7 @@ registerForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0,
             const response = yield fetch("https://pdp-movies-78.onrender.com/api/auth/", {
                 method: "POST",
                 body: JSON.stringify(user),
-                headers: { "content-Type": "application/json" },
+                headers: { "content-type": "application/json" },
             });
             const data = yield response.json();
             console.log(data);

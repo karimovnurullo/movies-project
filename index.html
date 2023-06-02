@@ -43,12 +43,12 @@
          </div>
          <div class="main-right">
             <button class="btn btn-primary add-new-movie">New Movie</button>
-            <div class="showing-result">Showing 12 movies in the database.</div>
-            <input type="text" name="query" class="form-control my-3" placeholder="Search..." value="">
+            <div class="showing-result">Showing <span class="showing-num">0</span> movies in the database.</div>
+            <input type="search" name="query" class="form-control search my-3" placeholder="Search..." value="">
             <table class="main-table table table-light table-hover">
                <thead>
                   <tr>
-                     <th scope="col">Title</th>
+                     <th scope="col"><button class="title-sort">Title</button></th>
                      <th scope="col">Genre</th>
                      <th scope="col">Stock</th>
                      <th scope="col">Rate</th>
@@ -64,10 +64,10 @@
                </tr> -->
                </tbody>
             </table>
-            <div class="btn-group me-2" role="group" aria-label="Second group">
-               <button type="button" class="btn btn-outline-secondary">1</button>
-               <button type="button" class="btn btn-outline-secondary">2</button>
-               <button type="button" class="btn btn-outline-secondary">3</button>
+            <div class="btn-group pagination me-2" role="group" aria-label="Second group">
+               <!-- <button type="button" class="btn btn-outline-secondary">1</button> -->
+               <!-- <button type="button" class="btn btn-outline-secondary">2</button> -->
+               <!-- <button type="button" class="btn btn-outline-secondary">3</button> -->
             </div>
          </div>
       </main>

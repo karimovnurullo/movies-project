@@ -7,7 +7,6 @@ const registerAlert =
 registerForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // Get form input values
   const email = registerForm.email.value.trim();
   const emailAlert =
     registerForm.querySelector<HTMLDivElement>(".email-alert")!;
@@ -40,7 +39,7 @@ registerForm.addEventListener("submit", async (e) => {
         {
           method: "POST",
           body: JSON.stringify(user),
-          headers: { "content-Type": "application/json" },
+          headers: { "content-type": "application/json" },
         }
       );
       const data = await response.json();
