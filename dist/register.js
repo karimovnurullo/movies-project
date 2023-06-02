@@ -18,8 +18,8 @@ registerForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0,
     const passwordAlert = registerForm.querySelector(".password-alert");
     const usernameAlert = registerForm.querySelector(".username-alert");
     const password = registerForm.password.value.trim();
-    const username = registerForm.userName.value.trim();
-    if (!email && !password && !username) {
+    const name = registerForm.username.value.trim();
+    if (!email && !password && !name) {
         registerAlert.classList.remove("d-none");
         setTimeout(() => registerAlert.classList.add("d-none"), 2500);
     }
@@ -33,24 +33,31 @@ registerForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0,
         setTimeout(() => passwordAlert.classList.add("d-none"), 2500);
         registerAlert.classList.add("d-none");
     }
-    else if (!username) {
+    else if (!name) {
         usernameAlert.classList.remove("d-none");
         registerAlert.classList.add("d-none");
         setTimeout(() => usernameAlert.classList.add("d-none"), 2500);
     }
     else {
+        let user = { name, email, password };
         try {
-            let user = { email, password, username };
-            const response = yield fetch("https://pdp-movies-78.onrender.com/api/auth/", {
+            const response = yield fetch("https://pdp-movies-78.onrender.com/api/users/", {
                 method: "POST",
-                body: JSON.stringify(user),
-                headers: { "content-type": "application/json" },
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(user)
             });
-            const data = yield response.json();
-            console.log(data);
+            if (response.ok) {
+                const data = yield response.json();
+                console.log(data);
+            }
+            else {
+                throw new Error("Request failed with status: " + response.status);
+            }
         }
         catch (error) {
-            console.error(error);
+            console.error(error.message);
         }
     }
 }));

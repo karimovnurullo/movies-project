@@ -79,13 +79,6 @@ async function showMovies() {
       renderMovies();
       updatePagination();
     });
-    let sortmuvies = newArr.sort((a, b) => b.title.localeCompare(a.title));
-    sortTitle.addEventListener("click", () => {
-      for (const movie of sortmuvies) {
-        clearTable();
-        generateRow(movie);
-      }
-    });
   }
 
   filteredMovies = sortMovies;

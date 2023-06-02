@@ -15,9 +15,9 @@ registerForm.addEventListener("submit", async (e) => {
   const usernameAlert =
     registerForm.querySelector<HTMLDivElement>(".username-alert")!;
   const password = registerForm.password.value.trim();
-  const username = registerForm.userName.value.trim();
+  const name = registerForm.username.value.trim();
 
-  if (!email && !password && !username) {
+  if (!email && !password && !name) {
     registerAlert.classList.remove("d-none");
     setTimeout(() => registerAlert.classList.add("d-none"), 2500);
   } else if (!email) {
@@ -28,24 +28,30 @@ registerForm.addEventListener("submit", async (e) => {
     passwordAlert.classList.remove("d-none");
     setTimeout(() => passwordAlert.classList.add("d-none"), 2500);
     registerAlert.classList.add("d-none");
-  } else if (!username) {
+  } else if (!name) {
     usernameAlert.classList.remove("d-none");
     registerAlert.classList.add("d-none");
     setTimeout(() => usernameAlert.classList.add("d-none"), 2500);
   } else {
+    let user = { name, email, password };
     try {
-      let user = { email, password, username };
-      const response = await fetch("https://pdp-movies-78.onrender.com/api/auth/",
-        {
-          method: "POST",
-          body: JSON.stringify(user),
-          headers: { "content-type": "application/json" },
-        }
-      );
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error(error);
+      const response = await fetch("https://pdp-movies-78.onrender.com/api/users/", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify(user)
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+      } else {
+        throw new Error("Request failed with status: " + response.status);
+      }
+    } catch (error: any) {
+      console.error(error.message);
     }
+
   }
 });
