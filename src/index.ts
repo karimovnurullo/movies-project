@@ -1,12 +1,15 @@
-
 const listGroupMenus = document.querySelector<HTMLUListElement>(".list-group")!;
 const tbody = document.querySelector<HTMLTableElement>(".tbody")!;
 const loginBtn = document.querySelectorAll<HTMLButtonElement>(".login-btn")!;
-const registerBtn = document.querySelectorAll<HTMLButtonElement>(".register-btn")!;
+const registerBtn =
+  document.querySelectorAll<HTMLButtonElement>(".register-btn")!;
 const showingNum = document.querySelector<HTMLSpanElement>(".showing-num")!;
 const searchInput = document.querySelector<HTMLInputElement>(".search")!;
-const titleSort = document.querySelector<HTMLButtonElement>(".title-sort")!;
 const pagination = document.querySelector<HTMLDivElement>(".pagination")!;
+const sortTitle = document.querySelector<HTMLTableElement>(".title-sort")!;
+const sortGenre = document.querySelector<HTMLTableElement>(".genre-sort")!;
+const sortStock = document.querySelector<HTMLTableElement>(".stock-sort")!;
+const sortRate = document.querySelector<HTMLTableElement>(".rate-sort")!;
 
 async function getMenus() {
   const res = await fetch("https://pdp-movies-78.onrender.com/api/genres/");
@@ -36,7 +39,7 @@ getMovies().then((movies) => {
       generateRow(movie);
     }
     showingNum.textContent = counter.toString();
-  })
+  });
 
   //=========================  SEARCH =================
 
@@ -51,33 +54,8 @@ getMovies().then((movies) => {
       }
     }
     showingNum.textContent = count.toString();
-  })
-})
-
-
-// async function showMovies() {
-//   const menus = await getMenus();
-//   const movies = await getMovies();
-//   let sortmuvies = movies.sort((a, b) => a.title.localeCompare(b.title));
-
-//   for (const menu of menus) {
-//     const newArr = sortmuvies.filter(item => menu.name === item.genre.name)
-//     const li = document.createElement("li");
-//     li.classList.add("list-group-item");
-//     li.textContent = menu.name;
-//     listGroupMenus.append(li);
-//     li.addEventListener("click", (e) => {
-//       activeMenu(e);
-//       clearTable();
-//       let counter = 0;
-//       for (const movie of newArr) {
-//         counter++;
-//         generateRow(movie);
-//       }
-//       showingNum.textContent = counter.toString();
-//     });
-//   }
-// }
+  });
+});
 
 const itemsPerPage = 4;
 let currentPage = 1;
@@ -89,7 +67,7 @@ async function showMovies() {
   let sortMovies = movies.sort((a, b) => a.title.localeCompare(b.title));
 
   for (const menu of menus) {
-    const newArr = sortMovies.filter(item => menu.name === item.genre.name);
+    const newArr = sortMovies.filter((item) => menu.name === item.genre.name);
     const li = document.createElement("li");
     li.classList.add("list-group-item");
     li.textContent = menu.name;
@@ -100,6 +78,13 @@ async function showMovies() {
       currentPage = 1;
       renderMovies();
       updatePagination();
+    });
+    let sortmuvies = newArr.sort((a, b) => b.title.localeCompare(a.title));
+    sortTitle.addEventListener("click", () => {
+      for (const movie of sortmuvies) {
+        clearTable();
+        generateRow(movie);
+      }
     });
   }
 
@@ -147,9 +132,12 @@ function updatePagination() {
 
 showMovies();
 
-
-loginBtn.forEach(element => element.addEventListener("click", () => window.location.href = "login"));
-registerBtn.forEach(element => element.addEventListener("click", () => window.location.href = "register"));
+loginBtn.forEach((element) =>
+  element.addEventListener("click", () => (window.location.href = "login"))
+);
+registerBtn.forEach((element) =>
+  element.addEventListener("click", () => (window.location.href = "register"))
+);
 
 // ========================== Functions =================
 
@@ -163,9 +151,13 @@ function activeMenu(e: Event) {
   (e.target as HTMLLIElement).classList.add("active");
 }
 
-
 function generateRow(movie: any) {
-  const rowData = [movie.title, movie.genre.name, movie.numberInStock.toString(), movie.dailyRentalRate.toString()];
+  const rowData = [
+    movie.title,
+    movie.genre.name,
+    movie.numberInStock.toString(),
+    movie.dailyRentalRate.toString(),
+  ];
   const tr = document.createElement("tr");
   rowData.forEach((columnData) => {
     const td = document.createElement("td");
@@ -174,4 +166,3 @@ function generateRow(movie: any) {
   });
   tbody.appendChild(tr);
 }
-
