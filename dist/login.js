@@ -19,19 +19,22 @@ loginForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0, fu
     }
     else {
         try {
-            let user = { email, password };
+            const user = { email, password };
             const response = yield fetch("https://pdp-movies-78.onrender.com/api/auth/", {
                 method: "POST",
-                headers: {
-                    "content-type": "application/json",
-                },
                 body: JSON.stringify(user),
+                headers: {
+                    "Content-Type": "application/json",
+                },
             });
-            const { data } = yield response.json();
+            if (!response.ok) {
+                throw new Error("Failed to login. Please try again.");
+            }
+            const data = yield response.json();
             console.log(data);
         }
-        catch (error) {
-            console.error(error.message);
+        catch (err) {
+            console.error(err.message);
         }
     }
 }));

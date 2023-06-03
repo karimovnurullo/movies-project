@@ -11,21 +11,23 @@ loginForm.addEventListener("submit", async (e) => {
     console.log("error");
   } else {
     try {
-      let user = { email, password };
-      const response = await fetch(
-        "https://pdp-movies-78.onrender.com/api/auth/",
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(user),
-        }
-      );
-      const { data } = await response.json();
+      const user = { email, password };
+      const response = await fetch("https://pdp-movies-78.onrender.com/api/auth/", {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to login. Please try again.");
+      }
+
+      const data = await response.json();
       console.log(data);
-    } catch (error: any) {
-      console.error(error.message);
+    } catch (err: any) {
+      console.error(err.message);
     }
   }
 });
