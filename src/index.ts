@@ -50,7 +50,7 @@ async function getUser() {
 getMenus().then((menus) => {
   for (let i = 0; i < menus.length; i++) {
     const option = document.createElement("option");
-    option.value = menus[i].name;
+    option.value = menus[i]._id;
     option.text = menus[i].name;
     genreSelect.appendChild(option);
   }
@@ -193,17 +193,28 @@ function generateRow(movie: any) {
 
 addMovieForm.addEventListener("submit", async (e) => {
   e.preventDefault();
+  let manus = await getMenus();
   let token = localStorage.getItem("token");
   const title = addMovieForm.titlee.value;
-  const genre = addMovieForm.genre.value;
+  const genreValue = addMovieForm.genre.value;
   const numberInStock = addMovieForm.numberInStock.value;
   const rate = addMovieForm.rate.value;
-  if (!title && !genre && !numberInStock && !rate) {
+  if (!title && !genreValue && !numberInStock && !rate) {
     console.log("error");
   } else {
     try {
-      let movie = { title, name: genre, numberInStock, dailyRentalRate: rate };
-      console.log(title, genre, numberInStock, rate);
+      let manuName = manus.find((menu) => menu._id === genreValue);
+
+      let movie = {
+        title,
+        genre: {
+          name: manuName.name,
+          _id: genreValue,
+        },
+        numberInStock,
+        dailyRentalRate: rate,
+      };
+      console.log(title, manuName.name, genreValue, numberInStock, rate);
       const response = await fetch("https://pdp-movies-78.onrender.com/api/movies/", {
         method: "POST",
         headers: {
@@ -212,7 +223,7 @@ addMovieForm.addEventListener("submit", async (e) => {
         },
         body: JSON.stringify(movie),
       });
-      let { data } = await response.json();
+      let data = await response.json();
       console.log(data);
     } catch (error: any) {
       console.error(error.message);

@@ -63,7 +63,7 @@ function getUser() {
 getMenus().then((menus) => {
     for (let i = 0; i < menus.length; i++) {
         const option = document.createElement("option");
-        option.value = menus[i].name;
+        option.value = menus[i]._id;
         option.text = menus[i].name;
         genreSelect.appendChild(option);
     }
@@ -187,18 +187,28 @@ function generateRow(movie) {
 }
 addMovieForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0, function* () {
     e.preventDefault();
+    let manus = yield getMenus();
     let token = localStorage.getItem("token");
     const title = addMovieForm.titlee.value;
-    const genre = addMovieForm.genre.value;
+    const genreValue = addMovieForm.genre.value;
     const numberInStock = addMovieForm.numberInStock.value;
     const rate = addMovieForm.rate.value;
-    if (!title && !genre && !numberInStock && !rate) {
+    if (!title && !genreValue && !numberInStock && !rate) {
         console.log("error");
     }
     else {
         try {
-            let movie = { title, name: genre, numberInStock, dailyRentalRate: rate };
-            console.log(title, genre, numberInStock, rate);
+            let manuName = manus.find((menu) => menu._id === genreValue);
+            let movie = {
+                title,
+                genre: {
+                    name: manuName.name,
+                    _id: genreValue,
+                },
+                numberInStock,
+                dailyRentalRate: rate,
+            };
+            console.log(title, manuName.name, genreValue, numberInStock, rate);
             const response = yield fetch("https://pdp-movies-78.onrender.com/api/movies/", {
                 method: "POST",
                 headers: {
@@ -207,7 +217,7 @@ addMovieForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0,
                 },
                 body: JSON.stringify(movie),
             });
-            let { data } = yield response.json();
+            let data = yield response.json();
             console.log(data);
         }
         catch (error) {
