@@ -13,36 +13,37 @@ const editGenreSelect = document.querySelector<HTMLSelectElement>(".edit-genre-s
   }
 })();
 
+let movieId = localStorage.getItem("movieId")!;
+console.log(movieId);
+
 (async function name() {
-  let movieId = localStorage.getItem("movieId")!;
   const res = await fetch(`https://pdp-movies-78.onrender.com/api/movies/${movieId}`);
   const movie = await res.json();
   editMovieForm.titleName.value = movie.title;
   editGenreSelect.value = movie.genre._id;
   editMovieForm.numberInStock.value = movie.numberInStock;
   editMovieForm.rate.value = movie.dailyRentalRate;
-  console.log(movie._id);
 })();
 
 editMovieForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   let token = localStorage.getItem("token");
   const title = editMovieForm.titleName.value;
-  const genreValue = editMovieForm.genre.value;
+  const genreId = editMovieForm.genre.value;
   const numberInStock = parseInt(editMovieForm.numberInStock.value);
   const rate = parseInt(editMovieForm.rate.value);
-  if (!title && !genreValue && !numberInStock && !rate) {
+  if (!title && !genreId && !numberInStock && !rate) {
     console.log("error");
   } else {
     try {
       let movie = {
         title,
-        genreId: genreValue,
+        genreId,
         numberInStock,
         dailyRentalRate: rate,
       };
-      console.log(title, genreValue, numberInStock, rate);
-      const response = await fetch(`https://pdp-movies-78.onrender.com/api/movies`, {
+      console.log(title, genreId, numberInStock, rate);
+      const response = await fetch(`https://pdp-movies-78.onrender.com/api/movies/${movieId}`, {
         method: "PUT",
         headers: {
           "Content-type": "application/json",
