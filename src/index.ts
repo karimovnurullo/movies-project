@@ -1,6 +1,7 @@
 const listGroupMenus = document.querySelector<HTMLUListElement>(".list-group")!;
 const tbody = document.querySelector<HTMLTableElement>(".tbody")!;
 const loginBtn = document.querySelectorAll<HTMLLIElement>(".login-btn")!;
+const homeLoginBtn = document.querySelector<HTMLLIElement>(".home-login-btn")!;
 const registerBtn = document.querySelectorAll<HTMLButtonElement>(".register-btn")!;
 const showingNum = document.querySelector<HTMLSpanElement>(".showing-num")!;
 const searchInput = document.querySelector<HTMLInputElement>(".search")!;
@@ -41,6 +42,7 @@ async function getUser() {
   const data = await res.json();
   if (token) {
     homeUserName.textContent = data.name;
+    homeLoginBtn.classList.add("hide");
   }
 }
 

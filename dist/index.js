@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const listGroupMenus = document.querySelector(".list-group");
 const tbody = document.querySelector(".tbody");
 const loginBtn = document.querySelectorAll(".login-btn");
+const homeLoginBtn = document.querySelector(".home-login-btn");
 const registerBtn = document.querySelectorAll(".register-btn");
 const showingNum = document.querySelector(".showing-num");
 const searchInput = document.querySelector(".search");
@@ -53,6 +54,7 @@ function getUser() {
         const data = yield res.json();
         if (token) {
             homeUserName.textContent = data.name;
+            homeLoginBtn.classList.add("hide");
         }
     });
 }

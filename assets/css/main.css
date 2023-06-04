@@ -56,6 +56,6 @@ body {
 .btn-group {
   width: fit-content;
 }
-.login-btn.hide {
+.home-login-btn.hide {
   display: none;
 }
