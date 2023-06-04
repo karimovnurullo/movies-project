@@ -1,7 +1,6 @@
 const editMovieForm = document.querySelector<HTMLFormElement>(".edit-movie-form")!;
 const editGenreSelect = document.querySelector<HTMLSelectElement>(".edit-genre-select")!;
-
-
+// const options = editGenreSelect.querySelectorAll<HTMLOptionElement>("");
 (async function genres() {
   const res = await fetch("https://pdp-movies-78.onrender.com/api/genres/");
   const menus = await res.json();
@@ -9,7 +8,8 @@ const editGenreSelect = document.querySelector<HTMLSelectElement>(".edit-genre-s
     const option = document.createElement("option");
     option.value = menus[i]._id;
     option.text = menus[i].name;
-    genreSelect.appendChild(option);
+    option.className = "edit-option";
+    editGenreSelect.appendChild(option);
   }
 })();
 
@@ -18,10 +18,10 @@ const editGenreSelect = document.querySelector<HTMLSelectElement>(".edit-genre-s
   const res = await fetch(`https://pdp-movies-78.onrender.com/api/movies/${movieId}`);
   const movie = await res.json();
   editMovieForm.titleName.value = movie.title;
-  editGenreSelect.value = movie._id;
+  editGenreSelect.value = movie.genre._id;
   editMovieForm.numberInStock.value = movie.numberInStock;
   editMovieForm.rate.value = movie.dailyRentalRate;
-  
+  console.log(movie._id);
 })();
 
 editMovieForm.addEventListener("submit", async (e) => {

@@ -177,7 +177,6 @@ function generateRow(movie) {
             td.innerHTML = `<a href="edit">${rowData[0]}</a>`;
             td.addEventListener("click", () => {
                 localStorage.setItem("movieId", `${movie._id}`);
-                console.log(movie._id);
             });
         }
     });
