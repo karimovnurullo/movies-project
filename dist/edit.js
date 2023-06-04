@@ -78,6 +78,8 @@ deleteMovieBtn.addEventListener("click", () => __awaiter(void 0, void 0, void 0,
         headers: {
             "Content-type": "application/json",
             "x-auth-token": `${token}`,
-        }
+        },
     });
+    const data = yield response.json();
+    console.log(data);
 }));
