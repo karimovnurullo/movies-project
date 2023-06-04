@@ -1,6 +1,7 @@
 const editMovieForm = document.querySelector<HTMLFormElement>(".edit-movie-form")!;
 const editGenreSelect = document.querySelector<HTMLSelectElement>(".edit-genre-select")!;
-// const options = editGenreSelect.querySelectorAll<HTMLOptionElement>("");
+const deleteMovieBtn = document.querySelector<HTMLDivElement>(".delete-movie-btn")!;
+
 (async function genres() {
   const res = await fetch("https://pdp-movies-78.onrender.com/api/genres/");
   const menus = await res.json();
@@ -25,9 +26,9 @@ console.log(movieId);
   editMovieForm.rate.value = movie.dailyRentalRate;
 })();
 
+let token = localStorage.getItem("token");
 editMovieForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  let token = localStorage.getItem("token");
   const title = editMovieForm.titleName.value;
   const genreId = editMovieForm.genre.value;
   const numberInStock = parseInt(editMovieForm.numberInStock.value);
@@ -59,3 +60,13 @@ editMovieForm.addEventListener("submit", async (e) => {
     }
   }
 });
+
+deleteMovieBtn.addEventListener("click", async () => {
+    const response = await fetch(`https://pdp-movies-78.onrender.com/api/movies/${movieId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+          "x-auth-token": `${token}`,
+        }
+      });
+})

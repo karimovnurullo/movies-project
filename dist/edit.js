@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const editMovieForm = document.querySelector(".edit-movie-form");
 const editGenreSelect = document.querySelector(".edit-genre-select");
-// const options = editGenreSelect.querySelectorAll<HTMLOptionElement>("");
+const deleteMovieBtn = document.querySelector(".delete-movie-btn");
 (function genres() {
     return __awaiter(this, void 0, void 0, function* () {
         const res = yield fetch("https://pdp-movies-78.onrender.com/api/genres/");
@@ -36,9 +36,9 @@ console.log(movieId);
         editMovieForm.rate.value = movie.dailyRentalRate;
     });
 })();
+let token = localStorage.getItem("token");
 editMovieForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0, function* () {
     e.preventDefault();
-    let token = localStorage.getItem("token");
     const title = editMovieForm.titleName.value;
     const genreId = editMovieForm.genre.value;
     const numberInStock = parseInt(editMovieForm.numberInStock.value);
@@ -71,4 +71,13 @@ editMovieForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0
             console.error(error.message);
         }
     }
+}));
+deleteMovieBtn.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
+    const response = yield fetch(`https://pdp-movies-78.onrender.com/api/movies/${movieId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-type": "application/json",
+            "x-auth-token": `${token}`,
+        }
+    });
 }));
