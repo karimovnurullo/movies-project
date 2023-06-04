@@ -24,8 +24,6 @@ const homeUserName = document.querySelector(".home-user-name");
 const saveMovieBtn = document.querySelector(".save-movie-btn");
 const logoutBtn = document.querySelector(".logout-btn");
 const homeRegisterBtn = document.querySelector(".home-register-btn");
-const addMovieForm = document.querySelector(".add-movie-form");
-const genreSelect = document.querySelector(".genre-select");
 function getMenus() {
     return __awaiter(this, void 0, void 0, function* () {
         const res = yield fetch("https://pdp-movies-78.onrender.com/api/genres/");

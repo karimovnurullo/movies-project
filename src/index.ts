@@ -14,8 +14,6 @@ const homeUserName = document.querySelector<HTMLButtonElement>(".home-user-name"
 const saveMovieBtn = document.querySelector<HTMLButtonElement>(".save-movie-btn")!;
 const logoutBtn = document.querySelector<HTMLLIElement>(".logout-btn")!;
 const homeRegisterBtn = document.querySelector<HTMLLIElement>(".home-register-btn")!;
-const addMovieForm = document.querySelector<HTMLFormElement>(".add-movie-form")!;
-const genreSelect = document.querySelector<HTMLSelectElement>(".genre-select")!;
 
 async function getMenus() {
   const res = await fetch("https://pdp-movies-78.onrender.com/api/genres/");
