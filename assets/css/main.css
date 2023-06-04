@@ -69,3 +69,6 @@ body {
 .home-register-btn.hide {
   display: none;
 }
+.new-container {
+  padding: 50px;
+}
