@@ -1,19 +1,14 @@
 const registerForm = document.querySelector<HTMLFormElement>(".register-form")!;
-const registerSubmit =
-  document.querySelector<HTMLButtonElement>(".register-submit")!;
-const registerAlert =
-  document.querySelector<HTMLDivElement>(".register-alert")!;
+const registerSubmit = document.querySelector<HTMLButtonElement>(".register-submit")!;
+const registerAlert = document.querySelector<HTMLDivElement>(".register-alert")!;
 
 registerForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const email = registerForm.email.value.trim();
-  const emailAlert =
-    registerForm.querySelector<HTMLDivElement>(".email-alert")!;
-  const passwordAlert =
-    registerForm.querySelector<HTMLDivElement>(".password-alert")!;
-  const usernameAlert =
-    registerForm.querySelector<HTMLDivElement>(".username-alert")!;
+  const emailAlert = registerForm.querySelector<HTMLDivElement>(".email-alert")!;
+  const passwordAlert = registerForm.querySelector<HTMLDivElement>(".password-alert")!;
+  const usernameAlert = registerForm.querySelector<HTMLDivElement>(".username-alert")!;
   const password = registerForm.password.value.trim();
   const name = registerForm.username.value.trim();
 
@@ -35,23 +30,25 @@ registerForm.addEventListener("submit", async (e) => {
   } else {
     let user = { name, email, password };
     try {
-      const response = await fetch("https://pdp-movies-78.onrender.com/api/users/", {
+      const res = await fetch("https://pdp-movies-78.onrender.com/api/users/");
+
+        const response = await fetch("https://pdp-movies-78.onrender.com/api/users/", {
         method: "POST",
         headers: {
-          "content-type": "application/json"
+          "content-type": "application/json",
         },
-        body: JSON.stringify(user)
+        body: JSON.stringify(user),
       });
 
       if (response.ok) {
-        const data = await response.json();
+        const data = await response.text();
         console.log(data);
+        window.location.href = `http://127.0.0.1:5500`;
       } else {
         throw new Error("Request failed with status: " + response.status);
       }
     } catch (error: any) {
       console.error(error.message);
     }
-
   }
 });

@@ -19,6 +19,7 @@ const sortTitle = document.querySelector(".title-sort");
 const sortGenre = document.querySelector(".genre-sort");
 const sortStock = document.querySelector(".stock-sort");
 const sortRate = document.querySelector(".rate-sort");
+const homeUserName = document.querySelector(".home-user-name");
 function getMenus() {
     return __awaiter(this, void 0, void 0, function* () {
         const res = yield fetch("https://pdp-movies-78.onrender.com/api/genres/");
@@ -33,6 +34,29 @@ function getMovies() {
         return data;
     });
 }
+// async function getUser() {
+//   let token = localStorage.getItem("token");
+//   const res = await fetch(`https://pdp-movies-78.onrender.com/api/users/me`);
+//   const data = await res.text();
+//   return data;
+// }
+function getUser() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let token = localStorage.getItem("token");
+        const res = yield fetch("https://pdp-movies-78.onrender.com/api/users/me", {
+            method: "GET",
+            headers: {
+                "content-type": "application/json",
+                "x-auth-token": `${token}`,
+            },
+        });
+        const data = yield res.json();
+        if (token) {
+            homeUserName.textContent = data.name;
+        }
+    });
+}
+getUser();
 getMovies().then((movies) => {
     const liAll = document.createElement("li");
     liAll.classList.add("list-group-item", "active");
@@ -136,12 +160,7 @@ function activeMenu(e) {
     e.target.classList.add("active");
 }
 function generateRow(movie) {
-    const rowData = [
-        movie.title,
-        movie.genre.name,
-        movie.numberInStock.toString(),
-        movie.dailyRentalRate.toString(),
-    ];
+    const rowData = [movie.title, movie.genre.name, movie.numberInStock.toString(), movie.dailyRentalRate.toString()];
     const tr = document.createElement("tr");
     rowData.forEach((columnData) => {
         const td = document.createElement("td");

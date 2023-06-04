@@ -41,16 +41,18 @@ registerForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0,
     else {
         let user = { name, email, password };
         try {
+            const res = yield fetch("https://pdp-movies-78.onrender.com/api/users/");
             const response = yield fetch("https://pdp-movies-78.onrender.com/api/users/", {
                 method: "POST",
                 headers: {
-                    "content-type": "application/json"
+                    "content-type": "application/json",
                 },
-                body: JSON.stringify(user)
+                body: JSON.stringify(user),
             });
             if (response.ok) {
-                const data = yield response.json();
+                const data = yield response.text();
                 console.log(data);
+                window.location.href = `http://127.0.0.1:5500`;
             }
             else {
                 throw new Error("Request failed with status: " + response.status);

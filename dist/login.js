@@ -30,8 +30,10 @@ loginForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0, fu
             if (!response.ok) {
                 throw new Error("Failed to login. Please try again.");
             }
-            const data = yield response.json();
+            const { data } = yield response.json();
             console.log(data);
+            localStorage.setItem("token", data);
+            window.location.href = `http://127.0.0.1:5500`;
         }
         catch (err) {
             console.error(err.message);

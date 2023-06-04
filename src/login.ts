@@ -24,8 +24,12 @@ loginForm.addEventListener("submit", async (e) => {
         throw new Error("Failed to login. Please try again.");
       }
 
-      const data = await response.json();
+      const { data } = await response.json();
       console.log(data);
+
+      localStorage.setItem("token", data);
+
+      window.location.href = `http://127.0.0.1:5500`;
     } catch (err: any) {
       console.error(err.message);
     }

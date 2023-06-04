@@ -1,8 +1,7 @@
 const listGroupMenus = document.querySelector<HTMLUListElement>(".list-group")!;
 const tbody = document.querySelector<HTMLTableElement>(".tbody")!;
-const loginBtn = document.querySelectorAll<HTMLButtonElement>(".login-btn")!;
-const registerBtn =
-  document.querySelectorAll<HTMLButtonElement>(".register-btn")!;
+const loginBtn = document.querySelectorAll<HTMLLIElement>(".login-btn")!;
+const registerBtn = document.querySelectorAll<HTMLButtonElement>(".register-btn")!;
 const showingNum = document.querySelector<HTMLSpanElement>(".showing-num")!;
 const searchInput = document.querySelector<HTMLInputElement>(".search")!;
 const pagination = document.querySelector<HTMLDivElement>(".pagination")!;
@@ -10,6 +9,7 @@ const sortTitle = document.querySelector<HTMLTableElement>(".title-sort")!;
 const sortGenre = document.querySelector<HTMLTableElement>(".genre-sort")!;
 const sortStock = document.querySelector<HTMLTableElement>(".stock-sort")!;
 const sortRate = document.querySelector<HTMLTableElement>(".rate-sort")!;
+const homeUserName = document.querySelector<HTMLButtonElement>(".home-user-name")!;
 
 async function getMenus() {
   const res = await fetch("https://pdp-movies-78.onrender.com/api/genres/");
@@ -21,6 +21,30 @@ async function getMovies() {
   const data = await res.json();
   return data;
 }
+
+// async function getUser() {
+//   let token = localStorage.getItem("token");
+//   const res = await fetch(`https://pdp-movies-78.onrender.com/api/users/me`);
+//   const data = await res.text();
+//   return data;
+// }
+
+async function getUser() {
+  let token = localStorage.getItem("token");
+  const res = await fetch("https://pdp-movies-78.onrender.com/api/users/me", {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      "x-auth-token": `${token}`,
+    },
+  });
+  const data = await res.json();
+  if (token) {
+    homeUserName.textContent = data.name;
+  }
+}
+
+getUser();
 
 getMovies().then((movies) => {
   const liAll = document.createElement("li");
@@ -125,12 +149,8 @@ function updatePagination() {
 
 showMovies();
 
-loginBtn.forEach((element) =>
-  element.addEventListener("click", () => (window.location.href = "login"))
-);
-registerBtn.forEach((element) =>
-  element.addEventListener("click", () => (window.location.href = "register"))
-);
+loginBtn.forEach((element) => element.addEventListener("click", () => (window.location.href = "login")));
+registerBtn.forEach((element) => element.addEventListener("click", () => (window.location.href = "register")));
 
 // ========================== Functions =================
 
@@ -145,12 +165,7 @@ function activeMenu(e: Event) {
 }
 
 function generateRow(movie: any) {
-  const rowData = [
-    movie.title,
-    movie.genre.name,
-    movie.numberInStock.toString(),
-    movie.dailyRentalRate.toString(),
-  ];
+  const rowData = [movie.title, movie.genre.name, movie.numberInStock.toString(), movie.dailyRentalRate.toString()];
   const tr = document.createElement("tr");
   rowData.forEach((columnData) => {
     const td = document.createElement("td");
