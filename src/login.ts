@@ -29,7 +29,7 @@ loginForm.addEventListener("submit", async (e) => {
 
       localStorage.setItem("token", data);
 
-      window.location.href = `http://127.0.0.1:5500`;
+      window.location.href = `/`;
     } catch (err: any) {
       console.error(err.message);
     }

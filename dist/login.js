@@ -33,7 +33,7 @@ loginForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0, fu
             const { data } = yield response.json();
             console.log(data);
             localStorage.setItem("token", data);
-            window.location.href = `http://127.0.0.1:5500`;
+            window.location.href = `/`;
         }
         catch (err) {
             console.error(err.message);

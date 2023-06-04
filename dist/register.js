@@ -52,7 +52,8 @@ registerForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0,
             if (response.ok) {
                 const data = yield response.text();
                 console.log(data);
-                window.location.href = `http://127.0.0.1:5500`;
+                localStorage.setItem("token", data);
+                window.location.href = `/`;
             }
             else {
                 throw new Error("Request failed with status: " + response.status);

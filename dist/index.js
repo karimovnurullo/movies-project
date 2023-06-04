@@ -21,6 +21,11 @@ const sortGenre = document.querySelector(".genre-sort");
 const sortStock = document.querySelector(".stock-sort");
 const sortRate = document.querySelector(".rate-sort");
 const homeUserName = document.querySelector(".home-user-name");
+const saveMovieBtn = document.querySelector(".save-movie-btn");
+const logoutBtn = document.querySelector(".logout-btn");
+const homeRegisterBtn = document.querySelector(".home-register-btn");
+const addMovieForm = document.querySelector(".add-movie-form");
+const genreSelect = document.querySelector(".genre-select");
 function getMenus() {
     return __awaiter(this, void 0, void 0, function* () {
         const res = yield fetch("https://pdp-movies-78.onrender.com/api/genres/");
@@ -35,12 +40,6 @@ function getMovies() {
         return data;
     });
 }
-// async function getUser() {
-//   let token = localStorage.getItem("token");
-//   const res = await fetch(`https://pdp-movies-78.onrender.com/api/users/me`);
-//   const data = await res.text();
-//   return data;
-// }
 function getUser() {
     return __awaiter(this, void 0, void 0, function* () {
         let token = localStorage.getItem("token");
@@ -55,10 +54,25 @@ function getUser() {
         if (token) {
             homeUserName.textContent = data.name;
             homeLoginBtn.classList.add("hide");
+            logoutBtn.classList.add("show");
+            logoutBtn.classList.add("show");
+            homeRegisterBtn.classList.add("hide");
         }
     });
 }
+getMenus().then((menus) => {
+    for (let i = 0; i < menus.length; i++) {
+        const option = document.createElement("option");
+        option.value = menus[i].name;
+        option.text = menus[i].name;
+        genreSelect.appendChild(option);
+    }
+});
+window.addEventListener("load", () => { });
 getUser();
+logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("token");
+});
 getMovies().then((movies) => {
     const liAll = document.createElement("li");
     liAll.classList.add("list-group-item", "active");
@@ -171,3 +185,33 @@ function generateRow(movie) {
     });
     tbody.appendChild(tr);
 }
+addMovieForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0, function* () {
+    e.preventDefault();
+    let token = localStorage.getItem("token");
+    const title = addMovieForm.titlee.value;
+    const genre = addMovieForm.genre.value;
+    const numberInStock = addMovieForm.numberInStock.value;
+    const rate = addMovieForm.rate.value;
+    if (!title && !genre && !numberInStock && !rate) {
+        console.log("error");
+    }
+    else {
+        try {
+            let movie = { title, name: genre, numberInStock, dailyRentalRate: rate };
+            console.log(title, genre, numberInStock, rate);
+            const response = yield fetch("https://pdp-movies-78.onrender.com/api/movies/", {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "x-auth-token": `${token}`,
+                },
+                body: JSON.stringify(movie),
+            });
+            let { data } = yield response.json();
+            console.log(data);
+        }
+        catch (error) {
+            console.error(error.message);
+        }
+    }
+}));

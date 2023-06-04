@@ -59,3 +59,13 @@ body {
 .home-login-btn.hide {
   display: none;
 }
+.logout-btn {
+  display: none;
+}
+.logout-btn.show {
+  color: red;
+  display: flex;
+}
+.home-register-btn.hide {
+  display: none;
+}

@@ -32,7 +32,7 @@ registerForm.addEventListener("submit", async (e) => {
     try {
       const res = await fetch("https://pdp-movies-78.onrender.com/api/users/");
 
-        const response = await fetch("https://pdp-movies-78.onrender.com/api/users/", {
+      const response = await fetch("https://pdp-movies-78.onrender.com/api/users/", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -43,7 +43,8 @@ registerForm.addEventListener("submit", async (e) => {
       if (response.ok) {
         const data = await response.text();
         console.log(data);
-        window.location.href = `http://127.0.0.1:5500`;
+        localStorage.setItem("token", data);
+        window.location.href = `/`;
       } else {
         throw new Error("Request failed with status: " + response.status);
       }
