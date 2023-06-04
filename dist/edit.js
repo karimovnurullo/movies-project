@@ -8,9 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const addMovieForm = document.querySelector(".add-movie-form");
-const genreSelect = document.querySelector(".genre-select");
-(function name() {
+const editMovieForm = document.querySelector(".edit-movie-form");
+const editGenreSelect = document.querySelector(".edit-genre-select");
+(function genres() {
     return __awaiter(this, void 0, void 0, function* () {
         const res = yield fetch("https://pdp-movies-78.onrender.com/api/genres/");
         const menus = yield res.json();
@@ -22,13 +22,24 @@ const genreSelect = document.querySelector(".genre-select");
         }
     });
 })();
-addMovieForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0, function* () {
+(function name() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let movieId = localStorage.getItem("movieId");
+        const res = yield fetch(`https://pdp-movies-78.onrender.com/api/movies/${movieId}`);
+        const movie = yield res.json();
+        editMovieForm.titleName.value = movie.title;
+        editGenreSelect.value = movie._id;
+        editMovieForm.numberInStock.value = movie.numberInStock;
+        editMovieForm.rate.value = movie.dailyRentalRate;
+    });
+})();
+editMovieForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0, function* () {
     e.preventDefault();
     let token = localStorage.getItem("token");
-    const title = addMovieForm.titlee.value;
-    const genreValue = addMovieForm.genre.value;
-    const numberInStock = parseInt(addMovieForm.numberInStock.value);
-    const rate = parseInt(addMovieForm.rate.value);
+    const title = editMovieForm.titleName.value;
+    const genreValue = editMovieForm.genre.value;
+    const numberInStock = parseInt(editMovieForm.numberInStock.value);
+    const rate = parseInt(editMovieForm.rate.value);
     if (!title && !genreValue && !numberInStock && !rate) {
         console.log("error");
     }
@@ -41,8 +52,8 @@ addMovieForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0,
                 dailyRentalRate: rate,
             };
             console.log(title, genreValue, numberInStock, rate);
-            const response = yield fetch("https://pdp-movies-78.onrender.com/api/movies", {
-                method: "POST",
+            const response = yield fetch(`https://pdp-movies-78.onrender.com/api/movies`, {
+                method: "PUT",
                 headers: {
                     "Content-type": "application/json",
                     "x-auth-token": `${token}`,

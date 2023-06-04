@@ -24,6 +24,7 @@ const homeUserName = document.querySelector(".home-user-name");
 const saveMovieBtn = document.querySelector(".save-movie-btn");
 const logoutBtn = document.querySelector(".logout-btn");
 const homeRegisterBtn = document.querySelector(".home-register-btn");
+const addNewMovie = document.querySelector(".add-new-movie");
 function getMenus() {
     return __awaiter(this, void 0, void 0, function* () {
         const res = yield fetch("https://pdp-movies-78.onrender.com/api/genres/");
@@ -168,10 +169,20 @@ function activeMenu(e) {
 function generateRow(movie) {
     const rowData = [movie.title, movie.genre.name, movie.numberInStock.toString(), movie.dailyRentalRate.toString()];
     const tr = document.createElement("tr");
-    rowData.forEach((columnData) => {
+    rowData.forEach((columnData, idx) => {
         const td = document.createElement("td");
         td.textContent = columnData;
         tr.appendChild(td);
+        if (idx === 0) {
+            td.innerHTML = `<a href="edit">${rowData[0]}</a>`;
+            td.addEventListener("click", () => {
+                localStorage.setItem("movieId", `${movie._id}`);
+                console.log(movie._id);
+            });
+        }
     });
     tbody.appendChild(tr);
 }
+addNewMovie.addEventListener("click", () => {
+    window.location.href = "new";
+});

@@ -1,7 +1,8 @@
-const addMovieForm = document.querySelector<HTMLFormElement>(".add-movie-form")!;
-const genreSelect = document.querySelector<HTMLSelectElement>(".genre-select")!;
+const editMovieForm = document.querySelector<HTMLFormElement>(".edit-movie-form")!;
+const editGenreSelect = document.querySelector<HTMLSelectElement>(".edit-genre-select")!;
 
-(async function name() {
+
+(async function genres() {
   const res = await fetch("https://pdp-movies-78.onrender.com/api/genres/");
   const menus = await res.json();
   for (let i = 0; i < menus.length; i++) {
@@ -12,13 +13,24 @@ const genreSelect = document.querySelector<HTMLSelectElement>(".genre-select")!;
   }
 })();
 
-addMovieForm.addEventListener("submit", async (e) => {
+(async function name() {
+  let movieId = localStorage.getItem("movieId")!;
+  const res = await fetch(`https://pdp-movies-78.onrender.com/api/movies/${movieId}`);
+  const movie = await res.json();
+  editMovieForm.titleName.value = movie.title;
+  editGenreSelect.value = movie._id;
+  editMovieForm.numberInStock.value = movie.numberInStock;
+  editMovieForm.rate.value = movie.dailyRentalRate;
+  
+})();
+
+editMovieForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   let token = localStorage.getItem("token");
-  const title = addMovieForm.titlee.value;
-  const genreValue = addMovieForm.genre.value;
-  const numberInStock = parseInt(addMovieForm.numberInStock.value);
-  const rate = parseInt(addMovieForm.rate.value);
+  const title = editMovieForm.titleName.value;
+  const genreValue = editMovieForm.genre.value;
+  const numberInStock = parseInt(editMovieForm.numberInStock.value);
+  const rate = parseInt(editMovieForm.rate.value);
   if (!title && !genreValue && !numberInStock && !rate) {
     console.log("error");
   } else {
@@ -30,8 +42,8 @@ addMovieForm.addEventListener("submit", async (e) => {
         dailyRentalRate: rate,
       };
       console.log(title, genreValue, numberInStock, rate);
-      const response = await fetch("https://pdp-movies-78.onrender.com/api/movies", {
-        method: "POST",
+      const response = await fetch(`https://pdp-movies-78.onrender.com/api/movies`, {
+        method: "PUT",
         headers: {
           "Content-type": "application/json",
           "x-auth-token": `${token}`,

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Edit movie</title>
+   <link rel="stylesheet" href="../assets/css/main.css">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<body>
+   <div class="new-container">
+
+      <form class="edit-movie-form">
+         <h2>Movie Form</h2>
+         <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" name="titleName" class="form-control edit-form-title">
+         </div>
+         <div class="mb-3">
+            <label class="form-label">Genre</label>
+            <select name="genre" class="form-control edit-genre-select" id="">
+            </select>
+         </div>
+         <div class="mb-3">
+            <label class="form-label">Number In Stock</label>
+            <input type="number" name="numberInStock" class="form-control edit-form-stock">
+         </div>
+         <div class="mb-3">
+            <label class="form-label">Rate</label>
+            <input type="number" name="rate" class="form-control edit-form-rate">
+         </div>
+         <button type="submit" class="btn btn-primary save-movie-btn">Save</button>
+      </form>
+   </div>
+
+</body>
+<script type="module" src="../dist/edit.js"></script>
+
+</html>
