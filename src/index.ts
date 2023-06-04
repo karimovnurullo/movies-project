@@ -30,15 +30,15 @@ async function getMovies() {
 
 async function getUser() {
   let token = localStorage.getItem("token");
-  const res = await fetch("https://pdp-movies-78.onrender.com/api/users/me", {
-    method: "GET",
-    headers: {
-      "content-type": "application/json",
-      "x-auth-token": `${token}`,
-    },
-  });
-  const data = await res.json();
   if (token) {
+    const res = await fetch("https://pdp-movies-78.onrender.com/api/users/me", {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        "x-auth-token": `${token}`,
+      },
+    });
+    const data = await res.json();
     homeUserName.textContent = data.name;
     homeLoginBtn.classList.add("hide");
     logoutBtn.classList.add("show");
@@ -197,28 +197,26 @@ addMovieForm.addEventListener("submit", async (e) => {
   let token = localStorage.getItem("token");
   const title = addMovieForm.titlee.value;
   const genreValue = addMovieForm.genre.value;
-  const numberInStock = addMovieForm.numberInStock.value;
-  const rate = addMovieForm.rate.value;
+  const numberInStock = parseInt(addMovieForm.numberInStock.value);
+  const rate = parseInt(addMovieForm.rate.value);
   if (!title && !genreValue && !numberInStock && !rate) {
     console.log("error");
   } else {
     try {
-      let manuName = manus.find((menu) => menu._id === genreValue);
+      // let manuName = manus.find((menu) => menu._id === genreValue);
 
       let movie = {
         title,
-        genre: {
-          name: manuName.name,
-          _id: genreValue,
-        },
+        genreId: genreValue,
         numberInStock,
         dailyRentalRate: rate,
       };
-      console.log(title, manuName.name, genreValue, numberInStock, rate);
-      const response = await fetch("https://pdp-movies-78.onrender.com/api/movies/", {
+
+      console.log(title, genreValue, numberInStock, rate);
+      const response = await fetch("https://pdp-movies-78.onrender.com/api/movies", {
         method: "POST",
         headers: {
-          "content-type": "application/json",
+          "Content-type": "application/json",
           "x-auth-token": `${token}`,
         },
         body: JSON.stringify(movie),
