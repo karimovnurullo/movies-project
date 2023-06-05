@@ -31,11 +31,13 @@ body {
   gap: 20px;
   align-items: left;
 }
-#add-new-movie {
+#add-new-movie,
+#add-new-genre {
   width: fit-content;
   display: none;
 }
-#add-new-movie.show {
+#add-new-movie.show,
+#add-new-genre.show {
   display: flex;
 }
 .list-group {
@@ -88,6 +90,6 @@ body {
   font-size: 28px;
 }
 
-.genre-container{
+.genre-container {
   padding: 50px;
 }

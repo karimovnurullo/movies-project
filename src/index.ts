@@ -15,6 +15,7 @@ const saveMovieBtn = document.querySelector<HTMLButtonElement>(".save-movie-btn"
 const logoutBtn = document.querySelector<HTMLLIElement>(".logout-btn")!;
 const homeRegisterBtn = document.querySelector<HTMLLIElement>(".home-register-btn")!;
 const addNewMovie = document.querySelector<HTMLButtonElement>("#add-new-movie")!;
+const addNewGenre = document.querySelector<HTMLButtonElement>("#add-new-genre")!;
 const tds = document.querySelectorAll<HTMLTableColElement>(".cell")!;
 
 async function getMenus() {
@@ -44,6 +45,7 @@ async function getUser() {
     logoutBtn.classList.add("show");
     homeRegisterBtn.classList.add("hide");
     addNewMovie.classList.add("show");
+    addNewGenre.classList.add("show");
   }
 }
 

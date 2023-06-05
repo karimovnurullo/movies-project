@@ -25,6 +25,7 @@ const saveMovieBtn = document.querySelector(".save-movie-btn");
 const logoutBtn = document.querySelector(".logout-btn");
 const homeRegisterBtn = document.querySelector(".home-register-btn");
 const addNewMovie = document.querySelector("#add-new-movie");
+const addNewGenre = document.querySelector("#add-new-genre");
 const tds = document.querySelectorAll(".cell");
 function getMenus() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -57,6 +58,7 @@ function getUser() {
             logoutBtn.classList.add("show");
             homeRegisterBtn.classList.add("hide");
             addNewMovie.classList.add("show");
+            addNewGenre.classList.add("show");
         }
     });
 }
