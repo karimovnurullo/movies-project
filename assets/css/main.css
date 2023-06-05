@@ -11,6 +11,7 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  padding-bottom: 50px;
 }
 .navbar {
   user-select: none;
@@ -19,11 +20,11 @@ body {
 .main {
   padding: 40px 0;
   width: 100%;
-  height: calc(100vh - 56px);
   background-color: #fff;
   display: flex;
   justify-content: center;
   gap: 30px;
+  padding-bottom: 50px !important;
 }
 .main-right {
   display: flex;
@@ -94,7 +95,7 @@ body {
   padding: 50px;
 }
 
-.add-buttons{
+.add-buttons {
   display: flex;
   gap: 20px;
 }

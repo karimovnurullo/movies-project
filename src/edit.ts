@@ -69,7 +69,7 @@ deleteMovieBtn.addEventListener("click", async () => {
     const response = await fetch(`https://pdp-movies-78.onrender.com/api/movies/${movieId}`, {
       method: "DELETE",
       headers: {
-        // "Content-type": "application/json",
+        "Content-type": "application/json",
         "x-auth-token": `${token}`,
       },
     });
