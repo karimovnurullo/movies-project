@@ -12,6 +12,10 @@ body {
   display: flex;
   flex-direction: column;
 }
+.navbar {
+  user-select: none;
+  align-items: center;
+}
 .main {
   padding: 40px 0;
   width: 100%;
@@ -27,8 +31,12 @@ body {
   gap: 20px;
   align-items: left;
 }
-.add-new-movie {
+#add-new-movie {
   width: fit-content;
+  display: none;
+}
+#add-new-movie.show {
+  display: flex;
 }
 .list-group {
   width: 270px;
@@ -71,4 +79,11 @@ body {
 }
 .new-container {
   padding: 50px;
+}
+.nav-item {
+  cursor: pointer;
+  font-size: 20px;
+}
+#logo {
+  font-size: 28px;
 }

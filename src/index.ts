@@ -14,7 +14,8 @@ const homeUserName = document.querySelector<HTMLButtonElement>(".home-user-name"
 const saveMovieBtn = document.querySelector<HTMLButtonElement>(".save-movie-btn")!;
 const logoutBtn = document.querySelector<HTMLLIElement>(".logout-btn")!;
 const homeRegisterBtn = document.querySelector<HTMLLIElement>(".home-register-btn")!;
-const addNewMovie = document.querySelector<HTMLButtonElement>(".add-new-movie")!;
+const addNewMovie = document.querySelector<HTMLButtonElement>("#add-new-movie")!;
+const tds = document.querySelectorAll<HTMLTableColElement>(".cell")!;
 
 async function getMenus() {
   const res = await fetch("https://pdp-movies-78.onrender.com/api/genres/");
@@ -41,15 +42,21 @@ async function getUser() {
     homeUserName.textContent = data.name;
     homeLoginBtn.classList.add("hide");
     logoutBtn.classList.add("show");
-    logoutBtn.classList.add("show");
     homeRegisterBtn.classList.add("hide");
+    addNewMovie.classList.add("show");
   }
 }
 
 window.addEventListener("load", () => {});
 getUser();
 logoutBtn?.addEventListener("click", () => {
+  homeUserName.textContent = "";
   localStorage.removeItem("token");
+  homeLoginBtn.classList.remove("hide");
+  logoutBtn.classList.remove("show");
+  homeRegisterBtn.classList.remove("hide");
+  addNewMovie.classList.remove("show");
+  window.location.href = "/";
 });
 
 getMovies().then((movies) => {
@@ -171,16 +178,33 @@ function activeMenu(e: Event) {
 }
 
 function generateRow(movie: any) {
-  const rowData = [movie.title, movie.genre.name, movie.numberInStock.toString(), movie.dailyRentalRate.toString()];
+  let token1 = localStorage.getItem("token")!;
+  const rowData = [movie.title, movie.genre.name, movie.numberInStock.toString(), movie.dailyRentalRate.toString(), ""];
   const tr = document.createElement("tr");
   rowData.forEach((columnData, idx) => {
     const td = document.createElement("td");
     td.textContent = columnData;
+    td.className = "cell";
     tr.appendChild(td);
     if (idx === 0) {
-      td.innerHTML = `<a href="edit">${rowData[0]}</a>`;
-      td.addEventListener("click", () => {
-        localStorage.setItem("movieId", `${movie._id}`);
+      td.innerHTML = `<a>${rowData[0]}</a>`;
+      if (token1) {
+        td.innerHTML = `<a href="edit">${rowData[0]}</a>`;
+        td.addEventListener("click", () => {
+          localStorage.setItem("movieId", `${movie._id}`);
+        });
+      } else {
+        td.innerHTML = `<a href="login">${rowData[0]}</a>`;
+      }
+    }
+    if (idx === rowData.length - 1) {
+      td.innerHTML = `<i class="fa-regular fa-heart" style="color: #000000;"></i>`;
+      td.classList.add("like");
+      td.addEventListener("click", (e) => {
+        const heartIcon = e.target as HTMLElement;
+        console.log(heartIcon);
+
+        // heartIcon?.classList.toggle("fa-solid");
       });
     }
   });

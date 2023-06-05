@@ -9,6 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const loginForm = document.querySelector(".login-form");
+const loginRegisterBtn = document.querySelector(".login-register-btn");
+loginRegisterBtn.addEventListener("click", (e) => __awaiter(void 0, void 0, void 0, function* () {
+    window.location.href = "../register";
+}));
 loginForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0, function* () {
     e.preventDefault();
     console.log("Submit");

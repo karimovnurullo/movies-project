@@ -11,6 +11,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const registerForm = document.querySelector(".register-form");
 const registerSubmit = document.querySelector(".register-submit");
 const registerAlert = document.querySelector(".register-alert");
+const registerLoginBtn = document.querySelector(".register-login-btn");
+registerLoginBtn.addEventListener("click", (e) => __awaiter(void 0, void 0, void 0, function* () {
+    window.location.href = "../login";
+}));
 registerForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0, function* () {
     e.preventDefault();
     const email = registerForm.email.value.trim();

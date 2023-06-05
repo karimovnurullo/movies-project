@@ -1,7 +1,11 @@
 const registerForm = document.querySelector<HTMLFormElement>(".register-form")!;
 const registerSubmit = document.querySelector<HTMLButtonElement>(".register-submit")!;
 const registerAlert = document.querySelector<HTMLDivElement>(".register-alert")!;
+const registerLoginBtn = document.querySelector<HTMLLIElement>(".register-login-btn")!;
 
+registerLoginBtn.addEventListener("click", async (e) => {
+  window.location.href = "../login";
+});
 registerForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 

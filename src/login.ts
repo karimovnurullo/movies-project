@@ -1,4 +1,9 @@
 const loginForm = document.querySelector<HTMLFormElement>(".login-form")!;
+const loginRegisterBtn = document.querySelector<HTMLLIElement>(".login-register-btn")!;
+
+loginRegisterBtn.addEventListener("click", async (e) => {
+  window.location.href = "../register";
+});
 
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
