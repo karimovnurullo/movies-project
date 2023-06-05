@@ -48,8 +48,8 @@ async function getUser() {
 function updateUserInfo(userName: string) {
   homeUserName.textContent = userName;
   homeLoginBtn.classList.add("hide");
-  logoutBtn.classList.add("show");
   homeRegisterBtn.classList.add("hide");
+  logoutBtn.classList.add("show");
   addNewMovie.classList.add("show");
   addNewGenre.classList.add("show");
 }
@@ -60,6 +60,7 @@ function clearUserInfo() {
   logoutBtn.classList.remove("show");
   homeRegisterBtn.classList.remove("hide");
   addNewMovie.classList.remove("show");
+  addNewGenre.classList.remove("show");
 }
 
 getUser();
@@ -187,17 +188,17 @@ function activeMenu(e: Event) {
 }
 
 function generateRow(movie: any) {
-  let token1 = localStorage.getItem("token")!;
+  let token = localStorage.getItem("token")!;
   const rowData = [movie.title, movie.genre.name, movie.numberInStock.toString(), movie.dailyRentalRate.toString(), ""];
   const tr = document.createElement("tr");
+
   rowData.forEach((columnData, idx) => {
     const td = document.createElement("td");
     td.textContent = columnData;
-    td.className = "cell";
     tr.appendChild(td);
     if (idx === 0) {
       td.innerHTML = `<a>${rowData[0]}</a>`;
-      if (token1) {
+      if (token) {
         td.innerHTML = `<a href="edit">${rowData[0]}</a>`;
         td.addEventListener("click", () => {
           localStorage.setItem("movieId", `${movie._id}`);

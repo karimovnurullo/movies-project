@@ -74,6 +74,7 @@ deleteMovieBtn.addEventListener("click", async () => {
       },
     });
     const data = await response.json();
+    window.location.href = "/";
     console.log(data);
   } catch (error: any) {
     console.error(error.message);
