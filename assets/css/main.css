@@ -126,3 +126,6 @@ body {
 .loader.hide {
   display: none;
 }
+.list-group-item + .list-group-item {
+  height: fit-content;
+}
