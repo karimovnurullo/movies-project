@@ -27,10 +27,12 @@ const homeRegisterBtn = document.querySelector(".home-register-btn");
 const addNewMovie = document.querySelector("#add-new-movie");
 const addNewGenre = document.querySelector("#add-new-genre");
 const tds = document.querySelectorAll(".cell");
+const loader = document.querySelector(".loader");
 function getMenus() {
     return __awaiter(this, void 0, void 0, function* () {
         const res = yield fetch("https://pdp-movies-78.onrender.com/api/genres/");
         const data = yield res.json();
+        loader.classList.add("hide");
         return data;
     });
 }

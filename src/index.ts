@@ -17,10 +17,12 @@ const homeRegisterBtn = document.querySelector<HTMLLIElement>(".home-register-bt
 const addNewMovie = document.querySelector<HTMLButtonElement>("#add-new-movie")!;
 const addNewGenre = document.querySelector<HTMLButtonElement>("#add-new-genre")!;
 const tds = document.querySelectorAll<HTMLTableColElement>(".cell")!;
+const loader = document.querySelector<HTMLDivElement>(".loader")!;
 
 async function getMenus() {
   const res = await fetch("https://pdp-movies-78.onrender.com/api/genres/");
   const data = await res.json();
+  loader.classList.add("hide");
   return data;
 }
 async function getMovies() {
