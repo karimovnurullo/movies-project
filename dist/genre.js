@@ -31,7 +31,7 @@ genreForm.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0, fu
                 body: JSON.stringify(genre),
             });
             let data = yield response.json();
-            //   window.location.href = "/";
+            window.location.href = "/";
             console.log(data);
         }
         catch (error) {

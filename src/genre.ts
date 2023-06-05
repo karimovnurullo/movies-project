@@ -21,7 +21,7 @@ genreForm.addEventListener("submit", async (e) => {
         body: JSON.stringify(genre),
       });
       let data = await response.json();
-    //   window.location.href = "/";
+      window.location.href = "/";
       console.log(data);
     } catch (error: any) {
       console.error(error.message);

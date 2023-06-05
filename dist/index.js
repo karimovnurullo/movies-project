@@ -53,25 +53,28 @@ function getUser() {
                 },
             });
             const data = yield res.json();
-            homeUserName.textContent = data.name;
-            homeLoginBtn.classList.add("hide");
-            logoutBtn.classList.add("show");
-            homeRegisterBtn.classList.add("hide");
-            addNewMovie.classList.add("show");
-            addNewGenre.classList.add("show");
+            updateUserInfo(data.name);
         }
     });
 }
-window.addEventListener("load", () => { });
-getUser();
-logoutBtn === null || logoutBtn === void 0 ? void 0 : logoutBtn.addEventListener("click", () => {
+function updateUserInfo(userName) {
+    homeUserName.textContent = userName;
+    homeLoginBtn.classList.add("hide");
+    logoutBtn.classList.add("show");
+    homeRegisterBtn.classList.add("hide");
+    addNewMovie.classList.add("show");
+    addNewGenre.classList.add("show");
+}
+function clearUserInfo() {
     homeUserName.textContent = "";
-    localStorage.removeItem("token");
     homeLoginBtn.classList.remove("hide");
     logoutBtn.classList.remove("show");
     homeRegisterBtn.classList.remove("hide");
     addNewMovie.classList.remove("show");
-    window.location.href = "/";
+}
+getUser();
+logoutBtn === null || logoutBtn === void 0 ? void 0 : logoutBtn.addEventListener("click", () => {
+    clearUserInfo();
 });
 getMovies().then((movies) => {
     const liAll = document.createElement("li");
@@ -209,4 +212,7 @@ function generateRow(movie) {
 }
 addNewMovie.addEventListener("click", () => {
     window.location.href = "new";
+});
+addNewGenre.addEventListener("click", () => {
+    window.location.href = "genre";
 });

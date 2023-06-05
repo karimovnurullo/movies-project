@@ -93,3 +93,8 @@ body {
 .genre-container {
   padding: 50px;
 }
+
+.add-buttons{
+  display: flex;
+  gap: 20px;
+}

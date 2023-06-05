@@ -40,25 +40,30 @@ async function getUser() {
       },
     });
     const data = await res.json();
-    homeUserName.textContent = data.name;
-    homeLoginBtn.classList.add("hide");
-    logoutBtn.classList.add("show");
-    homeRegisterBtn.classList.add("hide");
-    addNewMovie.classList.add("show");
-    addNewGenre.classList.add("show");
+    updateUserInfo(data.name);
   }
 }
+function updateUserInfo(userName: string) {
+  homeUserName.textContent = userName;
+  homeLoginBtn.classList.add("hide");
+  logoutBtn.classList.add("show");
+  homeRegisterBtn.classList.add("hide");
+  addNewMovie.classList.add("show");
+  addNewGenre.classList.add("show");
+}
 
-window.addEventListener("load", () => {});
-getUser();
-logoutBtn?.addEventListener("click", () => {
+function clearUserInfo() {
   homeUserName.textContent = "";
-  localStorage.removeItem("token");
   homeLoginBtn.classList.remove("hide");
   logoutBtn.classList.remove("show");
   homeRegisterBtn.classList.remove("hide");
   addNewMovie.classList.remove("show");
-  window.location.href = "/";
+}
+
+getUser();
+
+logoutBtn?.addEventListener("click", () => {
+  clearUserInfo();
 });
 
 getMovies().then((movies) => {
@@ -213,4 +218,8 @@ function generateRow(movie: any) {
 
 addNewMovie.addEventListener("click", () => {
   window.location.href = "new";
+});
+
+addNewGenre.addEventListener("click", () => {
+  window.location.href = "genre";
 });
