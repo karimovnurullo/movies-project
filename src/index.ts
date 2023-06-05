@@ -199,12 +199,10 @@ function generateRow(movie: any) {
     }
     if (idx === rowData.length - 1) {
       td.innerHTML = `<i class="fa-regular fa-heart" style="color: #000000;"></i>`;
-      td.classList.add("like");
-      td.addEventListener("click", (e) => {
-        const heartIcon = e.target as HTMLElement;
-        console.log(heartIcon);
-
-        // heartIcon?.classList.toggle("fa-solid");
+      let icon = td.querySelector<HTMLElement>(".fa-heart")!;
+      icon.addEventListener("click", (e: any) => {
+        const heartIcon = e.target;
+        heartIcon?.classList.toggle("fa-solid");
       });
     }
   });

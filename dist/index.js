@@ -196,11 +196,10 @@ function generateRow(movie) {
         }
         if (idx === rowData.length - 1) {
             td.innerHTML = `<i class="fa-regular fa-heart" style="color: #000000;"></i>`;
-            td.classList.add("like");
-            td.addEventListener("click", (e) => {
+            let icon = td.querySelector(".fa-heart");
+            icon.addEventListener("click", (e) => {
                 const heartIcon = e.target;
-                console.log(heartIcon);
-                // heartIcon?.classList.toggle("fa-solid");
+                heartIcon === null || heartIcon === void 0 ? void 0 : heartIcon.classList.toggle("fa-solid");
             });
         }
     });

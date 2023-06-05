@@ -44,6 +44,9 @@ editMovieForm.addEventListener("submit", async (e) => {
         dailyRentalRate: rate,
       };
       console.log(title, genreId, numberInStock, rate);
+      console.log(movieId);
+      console.log(token);
+
       const response = await fetch(`https://pdp-movies-78.onrender.com/api/movies/${movieId}`, {
         method: "PUT",
         headers: {
@@ -62,14 +65,17 @@ editMovieForm.addEventListener("submit", async (e) => {
 });
 
 deleteMovieBtn.addEventListener("click", async () => {
-  const response = await fetch(`https://pdp-movies-78.onrender.com/api/movies/${movieId}`, {
-    method: "DELETE",
-    headers: {
-      // "Content-type": "application/json",
-      "x-auth-token": `${token}`,
-    },
-  });
-
-  const data = await response.json();
-  console.log(data);
+  try {
+    const response = await fetch(`https://pdp-movies-78.onrender.com/api/movies/${movieId}`, {
+      method: "DELETE",
+      headers: {
+        // "Content-type": "application/json",
+        "x-auth-token": `${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+  } catch (error: any) {
+    console.error(error.message);
+  }
 });
