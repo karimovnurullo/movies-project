@@ -32,7 +32,6 @@ function getMenus() {
     return __awaiter(this, void 0, void 0, function* () {
         const res = yield fetch("https://pdp-movies-78.onrender.com/api/genres/");
         const data = yield res.json();
-        loader.classList.add("hide");
         return data;
     });
 }
@@ -40,6 +39,7 @@ function getMovies() {
     return __awaiter(this, void 0, void 0, function* () {
         const res = yield fetch("https://pdp-movies-78.onrender.com/api/movies/");
         const data = yield res.json();
+        loader.classList.add("hide");
         return data;
     });
 }

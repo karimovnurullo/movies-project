@@ -22,12 +22,12 @@ const loader = document.querySelector<HTMLDivElement>(".loader")!;
 async function getMenus() {
   const res = await fetch("https://pdp-movies-78.onrender.com/api/genres/");
   const data = await res.json();
-  loader.classList.add("hide");
   return data;
 }
 async function getMovies() {
   const res = await fetch("https://pdp-movies-78.onrender.com/api/movies/");
   const data = await res.json();
+  loader.classList.add("hide");
   return data;
 }
 
